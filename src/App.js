@@ -1,14 +1,19 @@
+import { useState } from 'react';
 import styled from 'styled-components/macro'
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import HomeScreen from "./screens/HomeScreen";
 
 function App() {
+  const [isOpen, setIsOpen] = useState(false)
+
+  const handleToggleSidebar = () => setIsOpen(value => !value)
+
   return (
     <>
-      <Header />
+      <Header handleToggleSidebar={handleToggleSidebar} />
       <Main>
-        <Sidebar />
+        <Sidebar isOpen={isOpen} handleToggleSidebar={handleToggleSidebar} />
         <Container>
           <HomeScreen />
         </Container>

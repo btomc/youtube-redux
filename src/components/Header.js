@@ -3,10 +3,12 @@ import { FaBars } from 'react-icons/fa'
 import { AiOutlineSearch } from 'react-icons/ai'
 import { MdNotifications, MdApps } from 'react-icons/md'
 
-function Header() {
+function Header({ handleToggleSidebar }) {
     return (
         <Container>
-            <HeaderMenu size={26} />
+            <HeaderMenu size={26} 
+                onClick={handleToggleSidebar}
+            />
             <Logo src="/images/logo.png" alt="youtube logo"/>
 
             <SearchForm>
