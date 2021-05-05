@@ -31,7 +31,6 @@ function CategoriesBar() {
     return (
         <Container>
             {keywords.map((value, i) => (
-                // <span key={i} onClick={() => handleClick(value)}>{value} active={active}</span>
                 <span key={i} onClick={() => handleClick(value)} active={active}>{value} </span>
             ))}
         </Container>
@@ -42,11 +41,13 @@ export default CategoriesBar
 
 
 const Container = styled.div`
-    padding: 0.5rem 0;
+    /* padding: 0.5rem 0; */
+    padding: 0.8rem 0 3.8rem;
     font-size: 0.8rem;
     display: flex;
     overflow-x: scroll;
-    /* width: 100%; */
+
+
 
     &::-webkit-scrollbar {
         width: 0px
@@ -62,6 +63,7 @@ const Container = styled.div`
         white-space: nowrap;
         border: 1.5px solid #b1bdb4;
         border-radius: 999px;
+        height: 32px;
         /* color: ${({ active }) => active ? 'red' : '#fff'};
         background: ${({ bg }) => bg ? '' : '#606060'}; */
 

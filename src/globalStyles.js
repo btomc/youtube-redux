@@ -13,7 +13,11 @@ const GlobalStyle = createGlobalStyle`
         background-attachment: fixed;
         color: #b1bdb4;
         letter-spacing: 0.1px;
-    }
+
+        ::-webkit-scrollbar {
+            width: 0px
+        }
+    }    
 `
 
 export default GlobalStyle

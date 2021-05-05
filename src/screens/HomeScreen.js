@@ -23,17 +23,30 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     width: 100%;
+    height: 100%;
 `
 
 
 const Row = styled.div`
-    /* display: grid; */
-    /* grid-template-columns: repeat(4, 1fr); */
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
     gap: 10px;
     /* width: 100%; */
+
+    @media (max-width: 1160px) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media (max-width: 800px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: 440px) {
+        grid-template-columns: 1fr;
+    }
 `
 
 
 const Col = styled.div`
-    /* width: 100%; */
+    /* max-width: 320px; */
 `

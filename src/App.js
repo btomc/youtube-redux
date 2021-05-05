@@ -27,6 +27,7 @@ export default App;
 const Main = styled.div`
   display: flex;
   height: 90vh;
+  width: 100%;
 `
 
 const Container = styled.div`
