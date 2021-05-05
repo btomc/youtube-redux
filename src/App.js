@@ -3,6 +3,7 @@ import styled from 'styled-components/macro'
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import HomeScreen from "./screens/HomeScreen";
+import LoginScreen from './screens/LoginScreen';
 
 function App() {
   const [isOpen, setIsOpen] = useState(false)
@@ -19,6 +20,7 @@ function App() {
         </Container>
       </Main>      
     </>
+    // <LoginScreen />
   );
 }
 
