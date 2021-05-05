@@ -4,6 +4,7 @@ function LoginScreen() {
     return (
         <Container>
             <Wrapper>
+                <h1>Youtube Clone</h1>
                 <img src="/images/logo.png" alt="logo"/>
                 <Btn>Login with Google</Btn>
                 <Text>A Youtube clone project made using Youtube API</Text>

@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import styled from 'styled-components/macro'
+import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom'
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import HomeScreen from "./screens/HomeScreen";
 import LoginScreen from './screens/LoginScreen';
 
-function App() {
+const Layout = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false)
 
   const handleToggleSidebar = () => setIsOpen(value => !value)
@@ -16,11 +17,38 @@ function App() {
       <Main>
         <Sidebar isOpen={isOpen} handleToggleSidebar={handleToggleSidebar} />
         <Container>
-          <HomeScreen />
+          {children}
         </Container>
       </Main>      
     </>
-    // <LoginScreen />
+  )
+}
+
+function App() {
+  
+
+  return (
+    <Router>
+      <Switch>
+        <Route path='/' exact>
+          <Layout>
+            <HomeScreen />
+          </Layout>
+        </Route>
+        <Route path='/auth'>
+          <LoginScreen />
+        </Route>
+        <Route path='/search'>
+          <Layout>
+            <h1>Search Results</h1>
+          </Layout>
+        </Route>
+
+        <Route>
+          <Redirect to='/' />
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 
