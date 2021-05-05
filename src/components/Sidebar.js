@@ -63,9 +63,11 @@ const Container = styled.nav`
     }
 
     @media (max-width: 520px) {
-        display: ${({ isOpen }) => isOpen ? 'none' : 'block'};
+        /* display: ${({ isOpen }) => isOpen ? 'none' : 'block'}; */
+        /* display: none; */
         /* transform: ${({ isOpen }) => isOpen ? 'translateX: -100%' : 'translateX: 0'}; */
-        transition: all 0.2s ease-in;
+        left: ${({ isOpen }) => isOpen ? '0' : '-1000px'};
+        transition: all 0.3s ease-in-out;
         position: fixed;
         z-index: 999;
     }

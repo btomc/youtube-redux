@@ -22,17 +22,18 @@ export default HomeScreen
 const Container = styled.div`
     display: flex;
     flex-direction: column;
+    width: 100%;
 `
 
 
 const Row = styled.div`
-    display: grid;
+    /* display: grid; */
     /* grid-template-columns: repeat(4, 1fr); */
     gap: 10px;
-    width: 100%;
+    /* width: 100%; */
 `
 
 
 const Col = styled.div`
-    width: 100%;
+    /* width: 100%; */
 `

@@ -31,7 +31,6 @@ const Main = styled.div`
 
 const Container = styled.div`
   width: 100%;
-  border: 2px solid dodgerblue;
   display: flex;
   /* align-items: center; */
   justify-content: center;
