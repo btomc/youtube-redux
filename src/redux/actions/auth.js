@@ -5,6 +5,7 @@ import {
   LOGIN_FAIL,
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
+  LOGOUT,
 } from '../actionType'
 
 export const login = () => async (dispatch) => {
@@ -45,4 +46,14 @@ export const login = () => async (dispatch) => {
       payload: error.message,
     })
   }
+}
+
+export const logout = () => async (dispatch) => {
+  await auth.signOut()
+  dispatch({
+    type: LOGOUT,
+  })
+
+  sessionStorage.removeItem('ytc-access-token')
+  sessionStorage.removeItem('ytc-user')
 }
