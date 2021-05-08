@@ -1,15 +1,11 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components/macro'
-import {
-  BrowserRouter as Router,
-  Redirect,
-  Route,
-  Switch,
-} from 'react-router-dom'
+import { Redirect, Route, Switch, useHistory } from 'react-router-dom'
 import Header from './components/Header'
 import Sidebar from './components/Sidebar'
 import HomeScreen from './screens/HomeScreen'
 import LoginScreen from './screens/LoginScreen'
+import { useSelector } from 'react-redux'
 
 const Layout = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false)
@@ -28,28 +24,36 @@ const Layout = ({ children }) => {
 }
 
 function App() {
-  return (
-    <Router>
-      <Switch>
-        <Route path='/' exact>
-          <Layout>
-            <HomeScreen />
-          </Layout>
-        </Route>
-        <Route path='/auth'>
-          <LoginScreen />
-        </Route>
-        <Route path='/search'>
-          <Layout>
-            <h1>Search Results</h1>
-          </Layout>
-        </Route>
+  const { accessToken, loading } = useSelector((state) => state.auth)
 
-        <Route>
-          <Redirect to='/' />
-        </Route>
-      </Switch>
-    </Router>
+  const history = useHistory()
+
+  useEffect(() => {
+    if (!loading && !accessToken) {
+      history.push('/auth')
+    }
+  }, [accessToken, loading, history])
+
+  return (
+    <Switch>
+      <Route path='/' exact>
+        <Layout>
+          <HomeScreen />
+        </Layout>
+      </Route>
+      <Route path='/auth'>
+        <LoginScreen />
+      </Route>
+      <Route path='/search'>
+        <Layout>
+          <h1>Search Results</h1>
+        </Layout>
+      </Route>
+
+      <Route>
+        <Redirect to='/' />
+      </Route>
+    </Switch>
   )
 }
 
