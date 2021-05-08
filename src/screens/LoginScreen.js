@@ -1,12 +1,31 @@
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useHistory } from 'react-router'
 import styled from 'styled-components/macro'
+import { login } from '../redux/actions/auth'
 
 function LoginScreen() {
+    const dispatch = useDispatch()
+    const history = useHistory()
+
+    const accessToken = useSelector(state => state.auth.accessToken)
+
+    const handleLogin = () => {
+        dispatch(login())
+    }
+
+    useEffect(() => {
+        if(accessToken) {
+            history.push('/')
+        }
+    }, [accessToken, history])
+
     return (
         <Container>
             <Wrapper>
                 <h1>Youtube Clone</h1>
                 <img src="/images/logo.png" alt="logo"/>
-                <Btn>Login with Google</Btn>
+                <Btn onClick={handleLogin}>Login with Google</Btn>
                 <Text>A Youtube clone project made using Youtube API</Text>
             </Wrapper>
         </Container>
