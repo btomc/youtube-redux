@@ -65,10 +65,9 @@ const Container = styled.nav`
   height: 90vh;
   padding-top: 2rem;
   transition: 0.3s ease-in-out;
-
-  @media (max-width: 1224px) {
-    width: 90px;
-  }
+  position: sticky;
+  /* top: 10vh; */
+  left: 0;
 
   @media (max-width: 520px) {
     /* display: ${({ isOpen }) => (isOpen ? 'none' : 'block')}; */

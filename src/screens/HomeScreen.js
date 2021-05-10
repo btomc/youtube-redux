@@ -3,26 +3,42 @@ import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import CategoriesBar from '../components/CategoriesBar'
 import Video from '../components/Video'
-import { getPopularVideos } from '../redux/actions/videos'
+import { getPopularVideos, getVideosByCategory } from '../redux/actions/videos'
+import InfiniteScroll from 'react-infinite-scroll-component'
 
 function HomeScreen() {
   const dispatch = useDispatch()
-
-  const { videos } = useSelector((state) => state.homeVideos)
 
   useEffect(() => {
     dispatch(getPopularVideos())
   }, [dispatch])
 
+  const { videos, activeCategory } = useSelector((state) => state.homeVideos)
+
+  const fetchData = () => {
+    if (activeCategory === 'All') dispatch(getPopularVideos())
+    else {
+      dispatch(getVideosByCategory(activeCategory))
+    }
+  }
+
   return (
     <Container>
       <CategoriesBar />
       <Row>
-        {videos.map((video) => (
-          <Col key={video.id}>
-            <Video video={video} />
-          </Col>
-        ))}
+        <InfiniteScroll
+          dataLength={videos.length}
+          next={fetchData}
+          hasMore={true}
+          loader={true}
+          style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)' }}
+        >
+          {videos.map((video) => (
+            <Col key={video.id}>
+              <Video video={video} />
+            </Col>
+          ))}
+        </InfiniteScroll>
       </Row>
     </Container>
   )
@@ -39,7 +55,7 @@ const Container = styled.div`
 
 const Row = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  /* grid-template-columns: repeat(4, 1fr); */
   gap: 10px;
   /* width: 100%; */
 

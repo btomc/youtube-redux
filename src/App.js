@@ -63,6 +63,8 @@ const Main = styled.div`
   display: flex;
   height: 90vh;
   width: 100%;
+  /* margin-top: 10vh; */
+  align-self: flex-start;
 `
 
 const Container = styled.div`
