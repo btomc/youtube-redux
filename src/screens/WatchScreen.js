@@ -22,8 +22,8 @@ function WatchScreen() {
         <Comments />
       </ColBig>
       <Col>
-        {[...Array(10)].map(() => (
-          <VideoSmall />
+        {[...Array(10)].map((_, i) => (
+          <VideoSmall key={i} />
         ))}
       </Col>
     </Row>
