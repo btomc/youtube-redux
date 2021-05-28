@@ -65,7 +65,7 @@ function Video({ video }) {
       <VideoTop>
         {/* <img src={medium.url} alt='video-pic' /> */}
         <LazyLoadImage src={medium.url} effect='blur' />
-        <span>{formattedDuration}</span>
+        <VideoDuration>{formattedDuration}</VideoDuration>
       </VideoTop>
       <VideoTitle>{title}</VideoTitle>
       <VideoDetails>
@@ -104,15 +104,15 @@ const VideoTop = styled.div`
   img {
     width: 100%;
   }
+`
 
-  span {
-    position: absolute;
-    bottom: 0.3rem;
-    right: 0.3rem;
-    padding: 0.2rem;
-    background: #080808ec;
-    border-radius: 3px;
-  }
+const VideoDuration = styled.span`
+  position: absolute;
+  bottom: 0.3rem;
+  right: 0.3rem;
+  padding: 0.2rem;
+  background: #080808ec;
+  border-radius: 3px;
 `
 
 const VideoTitle = styled.div`

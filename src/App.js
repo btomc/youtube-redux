@@ -6,6 +6,7 @@ import Sidebar from './components/Sidebar'
 import HomeScreen from './screens/HomeScreen'
 import LoginScreen from './screens/LoginScreen'
 import { useSelector } from 'react-redux'
+import WatchScreen from './screens/WatchScreen'
 
 const Layout = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false)
@@ -41,12 +42,20 @@ function App() {
           <HomeScreen />
         </Layout>
       </Route>
+
       <Route path='/auth'>
         <LoginScreen />
       </Route>
+
       <Route path='/search'>
         <Layout>
           <h1>Search Results</h1>
+        </Layout>
+      </Route>
+
+      <Route path='/watch/:id'>
+        <Layout>
+          <WatchScreen />
         </Layout>
       </Route>
 
