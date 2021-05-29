@@ -4,25 +4,28 @@ import numeral from 'numeral'
 import { MdThumbUp, MdThumbDown } from 'react-icons/md'
 import ShowMoreText from 'react-show-more-text'
 
-function VideoMetaData() {
+function VideoMetaData({ video: { snippet, statistics }, videoId }) {
+  const { channelId, channelTitle, description, title, publishedAt } = snippet
+  const { viewCount, likeCount, dislikeCount } = statistics
+
   return (
     <VideoDataWrap>
       <VideoDataTop>
-        <h3>Video Title</h3>
+        <h3>{title}</h3>
         <TopContainer>
           <span>
-            {numeral(10000).format('0.a')} Views •{' '}
-            {moment('2021-05-23').fromNow()}
+            {numeral(viewCount).format('0.a')} Views •{' '}
+            {moment(publishedAt).fromNow()}
           </span>
 
           <div>
             <span style={{ marginRight: '10px' }}>
               <MdThumbUp size={26} />
-              {numeral(10000).format('0.a')}
+              {numeral(likeCount).format('0.a')}
             </span>
             <span style={{ marginRight: '10px' }}>
               <MdThumbDown size={26} />
-              {numeral(10000).format('0.a')}
+              {numeral(dislikeCount).format('0.a')}
             </span>
           </div>
         </TopContainer>
@@ -31,7 +34,7 @@ function VideoMetaData() {
         <div style={{ display: 'flex' }}>
           <img src='/images/profile.png' alt='avatar' />
           <ChannelWrap>
-            <span style={{ marginBottom: '3px' }}>Bohemian Rhapsody</span>
+            <span style={{ marginBottom: '3px' }}>{channelTitle}</span>
             <span style={{ fontSize: '14px' }}>
               {numeral(10000).format('0.a')} Subscribers
             </span>
@@ -47,13 +50,7 @@ function VideoMetaData() {
           expanded={false}
           style={{ textDecoration: 'none', fontWeight: '500', color: '#fff' }}
         >
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur
-          deserunt accusamus ducimus impedit, facilis nesciunt, quae iure cum
-          excepturi ex necessitatibus dolorum, neque in voluptas corrupti
-          consequatur Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Eligendi ab qui, earum iure libero porro. Enim deserunt eos aliquam
-          totam? Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Deserunt, doloremque.
+          {description}
         </ShowMoreText>
       </VideoDataDesc>
     </VideoDataWrap>
