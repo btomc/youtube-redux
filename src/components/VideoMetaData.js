@@ -3,10 +3,21 @@ import moment from 'moment'
 import numeral from 'numeral'
 import { MdThumbUp, MdThumbDown } from 'react-icons/md'
 import ShowMoreText from 'react-show-more-text'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { getChannelDetails } from '../redux/actions/channel'
 
 function VideoMetaData({ video: { snippet, statistics }, videoId }) {
   const { channelId, channelTitle, description, title, publishedAt } = snippet
   const { viewCount, likeCount, dislikeCount } = statistics
+
+  const dispatch = useDispatch()
+  const { snippet: channelSnippet, statistics: channelStatistics } =
+    useSelector((state) => state.channelDetails.channel)
+
+  useEffect(() => {
+    dispatch(getChannelDetails(channelId))
+  }, [dispatch, channelId])
 
   return (
     <VideoDataWrap>
@@ -32,11 +43,12 @@ function VideoMetaData({ video: { snippet, statistics }, videoId }) {
       </VideoDataTop>
       <VideoDataChannel>
         <div style={{ display: 'flex' }}>
-          <img src='/images/profile.png' alt='avatar' />
+          <img src={channelSnippet?.thumbnails?.default?.url} alt='avatar' />
           <ChannelWrap>
             <span style={{ marginBottom: '3px' }}>{channelTitle}</span>
             <span style={{ fontSize: '14px' }}>
-              {numeral(10000).format('0.a')} Subscribers
+              {numeral(channelStatistics?.subscriberCount).format('0.a')}{' '}
+              Subscribers
             </span>
           </ChannelWrap>
         </div>
@@ -85,6 +97,7 @@ const VideoDataChannel = styled.div`
   div > img {
     border-radius: 50%;
     width: 50px;
+    height: 50px;
     object-fit: contain;
     margin-right: 1.2rem;
   }
