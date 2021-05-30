@@ -1,22 +1,50 @@
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components/macro'
+import { addComment, getVideoCommentsById } from '../redux/actions/comments'
 import Comment from './Comment'
 
-function Comments() {
-  const handleComment = () => {}
+function Comments({ videoId, totalComments }) {
+  const [text, setText] = useState('')
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(getVideoCommentsById(videoId))
+  }, [dispatch, videoId])
+
+  const comments = useSelector((state) => state.commentsList.comments)
+
+  const _comments = comments?.map(
+    (comment) => comment.snippet.topLevelComment.snippet
+  )
+
+  const handleComment = (e) => {
+    e.preventDefault()
+    if (text.length === 0) return
+
+    dispatch(addComment(videoId, text))
+
+    setText('')
+  }
 
   return (
     <CommentsWrap>
-      <p>1234 Comments</p>
+      <p>{totalComments} Comments</p>
       <FormWrap>
         <img src='/images/profile.png' alt='avatar' />
         <CommentForm onSubmit={handleComment}>
-          <input type='text' placeholder='Write a comment...' />
+          <input
+            type='text'
+            placeholder='Write a comment...'
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+          />
           <button>Comment</button>
         </CommentForm>
       </FormWrap>
       <CommentsList>
-        {[...Array(12)].map((_, i) => (
-          <Comment key={i} />
+        {_comments?.map((comment, i) => (
+          <Comment key={i} comment={comment} />
         ))}
       </CommentsList>
     </CommentsWrap>
@@ -35,6 +63,7 @@ const FormWrap = styled.div`
   img {
     border-radius: 50%;
     width: 50px;
+    height: 50px;
     object-fit: contain;
     margin-right: 1.2rem;
   }

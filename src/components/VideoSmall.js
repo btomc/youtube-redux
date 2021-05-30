@@ -3,7 +3,6 @@ import numeral from 'numeral'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import styled from 'styled-components/macro'
 import { AiFillEye } from 'react-icons/ai'
-import request from '../api'
 
 function VideoSmall() {
   const seconds = moment.duration('100').asSeconds()

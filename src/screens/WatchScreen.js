@@ -37,7 +37,10 @@ function WatchScreen() {
           <h5>Loading...</h5>
         )}
 
-        <Comments />
+        <Comments
+          videoId={id}
+          totalComments={video?.statistics?.commentCount}
+        />
       </ColBig>
       <Col>
         {[...Array(10)].map((_, i) => (

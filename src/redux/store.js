@@ -1,9 +1,13 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import thunk from 'redux-thunk'
-import { authReducer } from './reducers/auth'
-import { homeVideosReducer, selectedVideoReducer } from './reducers/videos'
-import { channelDetailsReducer } from './reducers/channel'
+import { authReducer } from './reducers/authReducer'
+import {
+  homeVideosReducer,
+  selectedVideoReducer,
+} from './reducers/videosReducer'
+import { channelDetailsReducer } from './reducers/channelReducer'
+import { commentsListReducer } from './reducers/commentsReducer'
 
 const initialState = {}
 
@@ -12,6 +16,7 @@ const reducer = combineReducers({
   homeVideos: homeVideosReducer,
   selectedVideo: selectedVideoReducer,
   channelDetails: channelDetailsReducer,
+  commentsList: commentsListReducer,
 })
 
 const store = createStore(

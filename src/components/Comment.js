@@ -1,15 +1,18 @@
 import styled from 'styled-components/macro'
 import moment from 'moment'
 
-function Comment() {
+function Comment({ comment }) {
+  const { authorDisplayName, authorProfileImageUrl, publishedAt, textDisplay } =
+    comment
+
   return (
     <Container>
-      <img src='/images/profile.png' alt='avatar' />
+      <img src={authorProfileImageUrl} alt='avatar' />
       <CommentBody>
         <p style={{ marginBottom: '7px' }}>
-          Josh Petters • {moment('2021-05-25').fromNow()}{' '}
+          {authorDisplayName} • {moment(publishedAt).fromNow()}{' '}
         </p>
-        <p>Nice video bro!</p>
+        <p>{textDisplay}</p>
       </CommentBody>
     </Container>
   )
@@ -26,6 +29,7 @@ const Container = styled.div`
   img {
     border-radius: 50%;
     width: 50px;
+    height: 50px;
     object-fit: contain;
     margin-right: 1.2rem;
   }
