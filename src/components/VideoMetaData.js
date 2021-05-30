@@ -5,7 +5,10 @@ import { MdThumbUp, MdThumbDown } from 'react-icons/md'
 import ShowMoreText from 'react-show-more-text'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getChannelDetails } from '../redux/actions/channel'
+import {
+  checkSubscriptionStatus,
+  getChannelDetails,
+} from '../redux/actions/channel'
 
 function VideoMetaData({ video: { snippet, statistics }, videoId }) {
   const { channelId, channelTitle, description, title, publishedAt } = snippet
@@ -15,8 +18,13 @@ function VideoMetaData({ video: { snippet, statistics }, videoId }) {
   const { snippet: channelSnippet, statistics: channelStatistics } =
     useSelector((state) => state.channelDetails.channel)
 
+  const subscriptionStatus = useSelector(
+    (state) => state.channelDetails.subscriptionStatus
+  )
+
   useEffect(() => {
     dispatch(getChannelDetails(channelId))
+    dispatch(checkSubscriptionStatus(channelId))
   }, [dispatch, channelId])
 
   return (
@@ -52,7 +60,11 @@ function VideoMetaData({ video: { snippet, statistics }, videoId }) {
             </span>
           </ChannelWrap>
         </div>
-        <Btn>Subscribe</Btn>
+        {subscriptionStatus ? (
+          <Btn subs='true'>Subscribed</Btn>
+        ) : (
+          <Btn>Subscribe</Btn>
+        )}
       </VideoDataChannel>
       <VideoDataDesc>
         <ShowMoreText
@@ -115,7 +127,7 @@ const Btn = styled.button`
   margin: 1rem;
   cursor: pointer;
   border-radius: 2px;
-  background: red;
+  background: ${({ subs }) => (subs ? 'grey' : 'red')};
   color: #fff;
   font-size: 1rem;
   text-transform: uppercase;
