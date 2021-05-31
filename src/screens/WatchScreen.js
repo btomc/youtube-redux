@@ -1,11 +1,12 @@
 import { useEffect } from 'react'
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router'
 import styled from 'styled-components/macro'
 import Comments from '../components/Comments'
 import VideoMetaData from '../components/VideoMetaData'
 import VideoSmall from '../components/VideoSmall'
-import { getVideoById } from '../redux/actions/videos'
+import { getRelatedVideos, getVideoById } from '../redux/actions/videos'
 
 function WatchScreen() {
   const { id } = useParams()
@@ -14,9 +15,15 @@ function WatchScreen() {
 
   useEffect(() => {
     dispatch(getVideoById(id))
+
+    dispatch(getRelatedVideos(id))
   }, [dispatch, id])
 
   const { video, loading } = useSelector((state) => state.selectedVideo)
+
+  const { videos, loading: relatedVideosLoading } = useSelector(
+    (state) => state.relatedVideos
+  )
 
   return (
     <Row>
@@ -43,9 +50,15 @@ function WatchScreen() {
         />
       </ColBig>
       <Col>
-        {[...Array(10)].map((_, i) => (
-          <VideoSmall key={i} />
-        ))}
+        {!loading ? (
+          videos
+            ?.filter((video) => video.snippet)
+            .map((video) => <VideoSmall key={video.id.videoId} video={video} />)
+        ) : (
+          <SkeletonTheme color='#343a40' highlightColor='#3c4147'>
+            <Skeleton width='100%' height='130px' count={15} />
+          </SkeletonTheme>
+        )}
       </Col>
     </Row>
   )
