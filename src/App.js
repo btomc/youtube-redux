@@ -7,6 +7,7 @@ import HomeScreen from './screens/HomeScreen'
 import LoginScreen from './screens/LoginScreen'
 import { useSelector } from 'react-redux'
 import WatchScreen from './screens/WatchScreen'
+import SearchScreen from './screens/SearchScreen'
 
 const Layout = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false)
@@ -47,9 +48,9 @@ function App() {
         <LoginScreen />
       </Route>
 
-      <Route path='/search'>
+      <Route path='/search/:query'>
         <Layout>
-          <h1>Search Results</h1>
+          <SearchScreen />
         </Layout>
       </Route>
 
@@ -80,5 +81,5 @@ const Container = styled.div`
   width: 100%;
   display: flex;
   /* align-items: center; */
-  justify-content: center;
+  /* justify-content: center; */
 `

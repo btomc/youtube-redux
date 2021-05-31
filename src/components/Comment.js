@@ -35,4 +35,6 @@ const Container = styled.div`
   }
 `
 
-const CommentBody = styled.div``
+const CommentBody = styled.div`
+  max-width: 650px;
+`

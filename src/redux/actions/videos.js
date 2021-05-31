@@ -9,6 +9,9 @@ import {
   RELATED_VIDEOS_REQUEST,
   RELATED_VIDEOS_FAIL,
   RELATED_VIDEOS_SUCCESS,
+  SEARCHED_VIDEO_REQUEST,
+  SEARCHED_VIDEO_SUCCESS,
+  SEARCHED_VIDEO_FAIL,
 } from '../actionType'
 
 export const getPopularVideos = () => async (dispatch, getState) => {
@@ -124,6 +127,33 @@ export const getRelatedVideos = (id) => async (dispatch) => {
     dispatch({
       type: RELATED_VIDEOS_FAIL,
       payload: error.response.data.message,
+    })
+  }
+}
+
+export const getVideosBySearch = (keyword) => async (dispatch) => {
+  try {
+    dispatch({
+      type: SEARCHED_VIDEO_REQUEST,
+    })
+    const { data } = await request.get('/search', {
+      params: {
+        part: 'snippet',
+        maxResults: 20,
+        q: keyword,
+        type: 'video, channel',
+      },
+    })
+
+    dispatch({
+      type: SEARCHED_VIDEO_SUCCESS,
+      payload: data.items,
+    })
+  } catch (error) {
+    console.log(error.message)
+    dispatch({
+      type: SEARCHED_VIDEO_FAIL,
+      payload: error.message,
     })
   }
 }

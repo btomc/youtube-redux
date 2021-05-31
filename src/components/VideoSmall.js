@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react'
 import request from '../api'
 import { useHistory } from 'react-router'
 
-function VideoSmall({ video }) {
+function VideoSmall({ video, searchScreen }) {
   const [views, setViews] = useState(null)
   const [duration, setDuration] = useState(null)
   const [channelIcon, setChannelIcon] = useState(null)
@@ -25,6 +25,8 @@ function VideoSmall({ video }) {
       thumbnails: { medium },
     },
   } = video
+
+  const isVideo = id.kind === 'youtube#video'
 
   const seconds = moment.duration(duration).asSeconds()
   const formattedDuration = moment.utc(seconds * 1000).format('mm:ss')
@@ -63,23 +65,32 @@ function VideoSmall({ video }) {
   }, [channelId])
 
   const handleClick = () => {
-    history.push(`/watch/${id.videoId}`)
+    isVideo
+      ? history.push(`/watch/${id.videoId}`)
+      : history.push(`/channel/${id.channelId}`)
   }
+
+  // const thumbnail = !isVideo && 'video'
 
   return (
     <Row onClick={handleClick}>
       <VideoSmallLeft>
         <LazyLoadImage src={medium.url} effect='blur' />
-        <VideoDuration>{formattedDuration}</VideoDuration>
+        {isVideo && <VideoDuration>{formattedDuration}</VideoDuration>}
       </VideoSmallLeft>
       <VideoSmallRight>
         <p>{title}</p>
-        <VideoDetails>
-          <AiFillEye style={{ marginBottom: '-2px' }} />{' '}
-          {numeral(views).format('0.a')} Views • {moment(publishedAt).fromNow()}
-        </VideoDetails>
+        {isVideo && (
+          <VideoDetails>
+            <AiFillEye style={{ marginBottom: '-2px' }} />{' '}
+            {numeral(views).format('0.a')} Views •{' '}
+            {moment(publishedAt).fromNow()}
+          </VideoDetails>
+        )}
+        {isVideo && <p style={{ marginTop: '8px' }}>{description}</p>}
         <VideoChannel>
-          {/* <LazyLoadImage src='images/profile.png' effect='blur' /> */}
+          {isVideo && <LazyLoadImage src={channelIcon?.url} effect='blur' />}
+
           <p>{channelTitle}</p>
         </VideoChannel>
       </VideoSmallRight>

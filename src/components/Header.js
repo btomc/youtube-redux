@@ -2,15 +2,31 @@ import styled from 'styled-components/macro'
 import { FaBars } from 'react-icons/fa'
 import { AiOutlineSearch } from 'react-icons/ai'
 import { MdNotifications, MdApps } from 'react-icons/md'
+import { useState } from 'react'
+import { useHistory } from 'react-router'
 
 function Header({ handleToggleSidebar }) {
+  const [input, setInput] = useState('')
+
+  const history = useHistory()
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+
+    history.push(`search/${input}`)
+  }
+
   return (
     <Container>
       <HeaderMenu size={26} onClick={handleToggleSidebar} />
       <Logo src='/images/logo.png' alt='youtube logo' />
 
-      <SearchForm>
-        <SearchBar placeholder='Search' />
+      <SearchForm onSubmit={handleSubmit}>
+        <SearchBar
+          placeholder='Search'
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+        />
         <Btn type='submit'>
           <AiOutlineSearch size={22} />
         </Btn>

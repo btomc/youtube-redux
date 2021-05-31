@@ -53,7 +53,13 @@ function WatchScreen() {
         {!loading ? (
           videos
             ?.filter((video) => video.snippet)
-            .map((video) => <VideoSmall key={video.id.videoId} video={video} />)
+            .map((video) => (
+              <VideoSmall
+                key={video.id.videoId}
+                video={video}
+                style={{ width: '25%' }}
+              />
+            ))
         ) : (
           <SkeletonTheme color='#343a40' highlightColor='#3c4147'>
             <Skeleton width='100%' height='130px' count={15} />
@@ -74,6 +80,7 @@ const Row = styled.div`
 const ColBig = styled.div`
   flex: 0.65;
   /* width: 100%; */
+  max-width: 650px;
 `
 const Col = styled.div`
   flex: 0.3;
